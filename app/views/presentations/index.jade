@@ -1,0 +1,56 @@
+.navbar
+  .navbar-inner
+    ul.nav.navbar-static-top
+      li
+        != linkTo('<i class="icon-plus"></i> New presentation', "#")
+.row
+  .span12
+    .alert
+      span.close(data-dismiss="alert") &times;
+      span This is the dummy way of presentation.
+
+  .span3
+    #presentationsBox.pptbox
+      .presentation
+  .span9
+    .sldbox
+      .slides
+        .slide
+        .slide
+        .slide.plus
+
+hr
+.row
+  .span12 Available Presentations
+
+
+.row
+  .span3
+    #presentationsBox.pptbox
+      .presentation
+  .span9
+    .sldbox
+      .slides
+        .slide
+        .slide
+        .slide.plus
+     
+
+- if (presentations.length == -1) {
+.row
+  .span12
+     table.table.table-striped
+       thead
+         tr
+           th ID
+           th.span3 Actions
+       tbody
+         - presentations.forEach(function (presentation) {
+         tr
+           td
+             != linkTo('presentation #' + presentation.id, path_to.presentation(presentation))
+           td
+             != linkTo('<i class="icon-edit"></i> Edit', pathTo.edit_presentation(presentation), {class: 'btn btn-mini'}) + ' '
+             != linkTo('<i class="icon-remove icon-white"></i> Delete', pathTo.presentation(presentation), {class: 'btn btn-mini btn-danger', method: 'delete', remote: true, jsonp: '(function (u) {location.href = u;})'})
+         - });
+- }

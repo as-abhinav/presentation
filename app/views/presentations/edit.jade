@@ -1,0 +1,22 @@
+ul.breadcrumb
+      li
+        a(href='/') Home
+        span.divider /
+      li
+        != linkTo('presentations', pathTo.presentations())
+        span.divider /
+      li.active
+        a(href='#') Edit presentation
+
+.page-header
+  h1 Edit presentation
+
+- var form = formFor(presentation, {action: pathTo.presentation(presentation), method: 'PUT', id: "presentation_form", class: 'form-horizontal'});
+
+!= form.begin()
+include _form
+.form-actions
+  != form.submit('<i class="icon-ok icon-white"></i> Update presentation', {class: 'btn btn-primary'})
+  span= ' or '
+  != linkTo('Cancel', pathTo.presentation(presentation), {class: 'btn'})
+!= form.end()

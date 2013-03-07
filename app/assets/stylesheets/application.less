@@ -1,0 +1,54 @@
+@color: white;
+body{
+	background: @color;
+}
+
+
+body{
+	.pptbox, .sldbox{
+		border: solid 1px #ccc;
+		background: #eee;
+		height: 200px;
+		position: relative;
+
+		.presentation, .slide{
+			background: white;
+			height: 180px;
+			top: 0;
+			bottom: 0;
+			width: 90%;
+			margin: 10px;
+			border: solid 1px rgb(170, 170, 170);
+			box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
+			border-radius: 10px;
+		}
+		.slide{
+			float: left;
+			width: 200px;
+			&.plus{
+				background: url("/images/add.png") no-repeat center center;
+				cursor: pointer;
+			}
+		}
+		.slides{
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+
+	}
+	.sldbox{
+		&:before{
+			position: absolute;
+			top: 50%;
+			content: '';
+			display: block;
+			border: solid 30px rgb(238, 238, 238);
+			left: -60px;
+			border-top-color: transparent;
+			border-bottom-color: transparent;
+			border-left-color: transparent;
+			margin-top: -30px;
+		}
+	}
+
+}
