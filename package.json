@@ -1,7 +1,7 @@
-{ "name": "presentation"
+{ "name": "sample"
 , "version": "0.0.1"
 , "engines": ["node >= 0.8.0"]
-, "main": "server.js"
+, "main": "server.coffee"
 , "dependencies":
   { "jade": "*"
   , "jade-ext": "latest"
@@ -11,13 +11,13 @@
   , "coffee-script": ">= 1.1.1"
   , "less": "latest"
   , "seedjs": "latest"
+  , "co-assets-compiler": "*"
   },
   "devDependencies":
   { "nodeunit": "*"
   , "sinon": "*"
   , "semicov": "*"
-  , "co-generators": "0.0.1"
-  , "co-assets-compiler": "*"
+  , "co-generators": "*"
   }
 , "scripts":
   { "test": "nodeunit test/*/*"
