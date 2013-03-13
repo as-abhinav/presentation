@@ -2,28 +2,9 @@
   .navbar-inner
     ul.nav.navbar-static-top
       li
-        != linkTo('<i class="icon-plus"></i> New presentation', "#")
-
-
-form#newPresentation.hide(action="#")
-  fieldset
-    legend New Presentation
-    .row
-      .span2
-        label(for="name") Name
-      .span8
-        input#name(type="text", name="name")
-    .row
-      .span2
-        label(for="description") Description
-      .span8
-        input#name(type="text", name="description")
-    .row
-      .span2
-      .span8
-        button.btn.btn-primary(type="submit") Create
-        button.btn(type="reset") Cancel
-
+        a(href="#addPresentationDialog", title="Create a new presentation", data-toggle="modal") 
+          i.icon-plus
+          | New presentation
 
 hr
 .row
@@ -37,14 +18,87 @@ hr
         .title Presentation Name
         .desc Description goes here
         .control
-          a.icon(href="#", title="Add a slide in presentation") 
+          a.icon(href="#", title="Remove the presentation")
+            i.icon-trash &nbsp;
+          a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") 
+            i.icon-play &nbsp;
+          a.icon(href="#addSlideDialog", title="Add a slide in presentation", data-toggle="modal") 
             i.icon-plus &nbsp;
 
   .span9
     .sldbox
-      .slides
-        .slide
+      ul.slides
+        li.slide
           h3 Slide 1
+          .control
+            a.icon(href="#", title="Remove the presentation")
+              i.icon-trash &nbsp;
 
-        .slide
+        li.slide
           h3 Slide 1
+          .control
+            a.icon(href="#", title="Remove the presentation")
+              i.icon-trash &nbsp;
+
+
+#addPresentationDialog.modal.hide.fade(role="dialog", aria-labelledby="addPresentationDialogLabel", aria-hidden="true")
+  .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 Create New Presentation
+    .modal-body
+      form#newPresentation.form-horizontal(action="#")
+        .control-group
+          label.control-label(for="name") Name
+          .controls
+            input#name(type="text", name="name")
+        .control-group
+          label.control-label(for="description") Description
+          .controls
+            input#name(type="text", name="description")
+
+    .modal-footer
+      a.btn(href='#', data-dismiss='modal') Cancel
+      a.btn.btn-primary(href='#') Create Presentation
+
+
+#addSlideDialog.modal.hide.fade(role="dialog", aria-labelledby="addSlideDialogLabel", aria-hidden="true")
+  .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 Add New Slide
+    .modal-body
+      form#newSlide.form-vertical(action="#")
+        .control-group
+          label.control-label(for="markup") Markup
+          .controls
+            textarea#markup(rows="10", name="markup")
+            
+
+    .modal-footer
+      a.btn(href='#', data-dismiss='modal') Cancel
+      a.btn.btn-primary(href='#') Add Slide
+
+
+#playPresentationDialog.container.modal.hide.fade(role="dialog", aria-labelledby="playPresentationDialogLabel", aria-hidden="true")
+  .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 Play Presentation
+    .modal-body      
+      #myCarousel.carousel.slide
+        ol.carousel-indicators
+            li.active(data-target='#myCarousel', data-slide-to='0')
+            li(data-target='#myCarousel', data-slide-to='1')
+            li(data-target='#myCarousel', data-slide-to='2')
+          //
+             Carousel items 
+          .carousel-inner
+            .active.item …
+            .item …
+            .item …
+          //
+             Carousel nav 
+          a.carousel-control.left(href='#myCarousel', data-slide='prev') ‹
+          a.carousel-control.right(href='#myCarousel', data-slide='next') ›
+
+
+    .modal-footer
+      a.btn(href='#', data-dismiss='modal') Cancel

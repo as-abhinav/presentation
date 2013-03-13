@@ -1,9 +1,6 @@
 body {
   background: #ffffff;
 }
-body .hide {
-  display: none;
-}
 body .pptbox,
 body .sldbox {
   border: solid 1px #ccc;
@@ -100,12 +97,12 @@ body .sldbox:before {
   border-left-color: transparent;
   margin-top: -30px;
 }
-body form#newPresentation {
-  border: solid 1px #dddddd;
-  padding: 10px;
-  margin: -21px 10px 0 10px;
-  box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.2);
+body form textarea {
+  width: 98%;
 }
-body form#newPresentation .btn-primary {
-  margin-right: 10px;
+body .modal.container {
+  margin-left: -585px;
+}
+body li {
+  list-style: none;
 }
