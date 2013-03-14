@@ -55,8 +55,8 @@ body .sldbox .slide {
   overflow: hidden;
   width: 200px;
 }
-body .pptbox .slide h3,
-body .sldbox .slide h3 {
+body .pptbox .slide h1,
+body .sldbox .slide h1 {
   font-size: 16px;
   font-weight: normal;
   text-align: center;
@@ -102,6 +102,10 @@ body form textarea {
 }
 body .modal.container {
   margin-left: -585px;
+}
+body ul,
+body ol {
+  margin: 0;
 }
 body li {
   list-style: none;
