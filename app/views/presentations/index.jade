@@ -2,28 +2,29 @@
   .navbar-inner
     ul.nav.navbar-static-top
       li
-        != linkTo('<i class="icon-plus"></i> New presentation', "#")
+        a(href="#newPresentationDialog", data-toggle="modal")
+            i.icon-plus
+            |   Create New Presentation
 
 
-form#newPresentation.hide(action="#")
-  fieldset
-    legend New Presentation
-    .row
-      .span2
-        label(for="name") Name
-      .span8
-        input#name(type="text", name="name")
-    .row
-      .span2
-        label(for="description") Description
-      .span8
-        input#name(type="text", name="description")
-    .row
-      .span2
-      .span8
-        button.btn.btn-primary(type="submit") Create
+#newPresentationDialog.modal.hide.fade(role="modal", aria-hidden="true", aria-labelledby="newPresentationDialogLabel")
+  form.form-horizontal(action="#")
+    .modal-header
+        button.close(type="button", data-dismiss='modal', aria-hidden='true') x
+        h3 New Presentation
+    .modal-body
+        .control-group
+            label.control-label(for="name") Name
+            .controls
+              input#name(type="text", name="name")
+        .control-group
+            label.control-label(for="description") Description
+            .controls
+              textarea#description(row="5", name="description")
+    .modal-footer
+        button.btn(type="button", data-dismiss='modal', aria-hidden="true") Close
         button.btn(type="reset") Cancel
-
+        button.btn.btn-primary(type="submit", aria-hidden="true") Create Presentation
 
 hr
 .row
