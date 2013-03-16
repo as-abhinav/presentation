@@ -110,3 +110,6 @@ body ol {
 body li {
   list-style: none;
 }
+body li.row {
+  margin-bottom: 20px;
+}

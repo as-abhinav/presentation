@@ -1,72 +1,111 @@
 var presentations = [],
 	pptTemplate,
-	slideTemplate;
-
-function setLocalStorage(data){
-	window.localStorage.setItem('ppt', JSON.stringify(data));
-}
-function getLocalStorage(){
-	var tmpStorage = window.localStorage.getItem('ppt');
-	return (tmpStorage != null) ? JSON.parse(tmpStorage) : [];
-}
+	slideTemplate,
+	presentationCounter = 0,
+	localStorageKey = 'ppt';
 
 function createNewPresentation(ppt){
 	createPresentation(ppt);
 	savePresentation(ppt);
 }
 
-function savePresentation(){
+function savePresentation(ppt){
 	if(ppt && !ppt.slides){
 		ppt.slides = [];
 	}
 	presentations.push(ppt);
-	setLocalStorage(presentations);
+	APP.localCache.set(localStorageKey, presentations);
 };
 
 var createPresentation = function(){
 	var pptTemplate = $("#presentationTemplate").html(),
 		$presentationContainer = $('#presentationContainer');
 	return function(ppt){
-		$presentationContainer.append(_.template(pptTemplate, ppt));
-	}
-	
+		var $tmpHtml = $(_.template(pptTemplate, ppt));
+
+		$tmpHtml.attr('data-ppt-id', ppt.id);
+		$presentationContainer.append($tmpHtml);
+		
+		$presentationContainer.find("a.icon.plus").off('click').on('click', function(){
+			var pptId = $(this).closest('li.row').attr('data-ppt-id'),
+				dialog = $('#addSlideDialog');
+			$('#newSlide').attr('data-ppt-id', pptId);
+			$('#addSlideDialog').modal();
+		});
+	};
 };
 
 function bindCreatePptForm(){
-	$("#newPresentation").on('submit', function(){
+	$("#newPresentation").on('submit', function(e){
+		e.preventDefault();
 		var $form = $(this);
-		createPresentation({title: $form.find('#name').val(), description: $form.find('#description').val() });
+		createNewPresentation({
+			id: ""+(presentationCounter++),
+			title: $form.find('#name').val(), 
+			description: $form.find('#description').val()
+		});
 		return false;
 	});
 }
 
-function bindSlideForm(){
-	
+function bindAddSlideForm(){
+	$("#newSlide").on('submit', function(e){
+		e.preventDefault();
+		var $form = $(this),
+			pptId = $form.data('ppt-id');
+		createNewSlide({
+			parentId: pptId,
+			content: escape($form.find('textarea').val())
+		});
+		return false;
+	});
+}
+
+function createNewSlide(slide){
+	createSlide(slide);
+	saveSlide(slide);
+}
+
+function saveSlide(slide){
+	$.each(presentations, function(index){
+		if(this.id == slide.parentId){
+			this.slides.push(slide);
+			return;
+		}
+	});
+
+	APP.localCache.set(localStorageKey, presentations);
 }
 
 function createSlide(){
-
+	var slideTemplate = $('#slideTemplate').html();
+	return function(slide){
+		var $slideContainer = $('#presentationContainer').find('>li').eq(slide.parentId).find('ul.slides');
+		$slideContainer.append(_.template(slideTemplate, slide));
+	};
 }
 
-function playPresentation(){
-
-}
 
 $(function(){
 	//load existing presentation
-	presentations = getLocalStorage();
-	
+	presentations = APP.localCache.get(localStorageKey);
+	presentationCounter = presentations.length;
 	createPresentation = createPresentation();
+	createSlide = createSlide();
 
 	//render existing presentations on screen
 	if(presentations && presentations.length){
 		$.each(presentations, function(){
 			createPresentation(this);
+			$.each(this.slides, function(){
+				createSlide(this);
+			});
 		})
 		
 	}
+	
 	//
 	bindCreatePptForm();
-
+	bindAddSlideForm();
 	//
 });

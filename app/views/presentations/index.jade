@@ -29,8 +29,7 @@ ul#presentationContainer
           input#description(type="text", name="description")
     .modal-footer
       a.btn(href='#', data-dismiss='modal') Cancel
-      button.btn.btn-primary(type='submit') 
-        Create Presentation
+      button.btn.btn-primary(type='submit') Create Presentation
 
 
 #addSlideDialog.modal.hide.fade(role="dialog", aria-labelledby="addSlideDialogLabel", aria-hidden="true")
@@ -45,7 +44,7 @@ ul#presentationContainer
           textarea#markup(rows="10", name="markup")
     .modal-footer
       a.btn(href='#', data-dismiss='modal') Cancel
-      a.btn.btn-primary(href='#') Add Slide
+      button.btn.btn-primary(type='submit') Add Slide
 
 
 #playPresentationDialog.container.modal.hide.fade(role="dialog", aria-labelledby="playPresentationDialogLabel", aria-hidden="true")
@@ -54,19 +53,6 @@ ul#presentationContainer
     h3 Play Presentation
   .modal-body      
     #myCarousel.carousel.slide
-      ol.carousel-indicators
-          li.active(data-target='#myCarousel', data-slide-to='0')
-          li(data-target='#myCarousel', data-slide-to='1')
-          li(data-target='#myCarousel', data-slide-to='2')
-        .carousel-inner
-          .active.item
-            div content 1
-          .item
-            div content 2
-          .item
-            div content 3
-        a.carousel-control.left(href='#playPresentationDialog', data-slide='prev') ‹
-        a.carousel-control.right(href='#playPresentationDialog', data-slide='next') ›
   .modal-footer
     a.btn(href='#', data-dismiss='modal') Cancel
 
@@ -82,7 +68,7 @@ script#presentationTemplate(type="text/html")
               i.icon-trash &nbsp;
             a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") 
               i.icon-play &nbsp;
-            a.icon(href="#addSlideDialog", title="Add a slide in presentation", data-toggle="modal") 
+            a.icon.plus(href="#", title="Add a slide in presentation", id="addSlideDialogLink<%= id %>", data-ppt-id='<%= id %>') 
               i.icon-plus &nbsp;
 
     .span9
@@ -91,8 +77,17 @@ script#presentationTemplate(type="text/html")
 
 script#slideTemplate(type="text/html")
   li.slide
-    h1 #<%= counter %>
+    h1 Slide
     .control
       a.icon(href="#", title="Remove the presentation")
         i.icon-trash &nbsp;
 
+script#playPresentationTemplate(type="text/html")
+  ol.carousel-indicators
+    .carousel-inner
+      <% _.each(slides,function(item,key){ %>
+        .active.item
+          div <%= item.description %>
+      <% }); %>
+    a.carousel-control.left(href='#playPresentationDialog', data-slide='prev') ‹
+    a.carousel-control.right(href='#playPresentationDialog', data-slide='next') ›
