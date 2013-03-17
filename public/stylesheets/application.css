@@ -1,8 +1,10 @@
 body {
   background: #ffffff;
 }
-body .hide {
-  display: none;
+body ul,
+body ol {
+  margin: 0px;
+  list-style: none;
 }
 body .pptbox,
 body .sldbox {

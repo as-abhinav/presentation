@@ -26,26 +26,29 @@
         button.btn(type="reset") Cancel
         button.btn.btn-primary(type="submit", aria-hidden="true") Create Presentation
 
+
 hr
 .row
   .span12
     h2 Available Presentations
 
-.row
-  .span3
-    #presentationsBox.pptbox
-      .presentation
-        .title Presentation Name
-        .desc Description goes here
-        .control
-          a.icon(href="#", title="Add a slide in presentation") 
-            i.icon-plus &nbsp;
+ul#presentationContainer
 
-  .span9
-    .sldbox
-      .slides
-        .slide
-          h3 Slide 1
+script#presentationTemplate(type="text/html")
+  li.row
+    .span3
+      #presentationsBox.pptbox
+        .presentation
+          .title <%= name %>
+          .desc <%= description %>
+          .control
+            a.icon.remove(href="#", title="Remove the presentation")
+              i.icon-trash &nbsp;
+            a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
+              i.icon-play &nbsp;
+            a.icon(href="#addSlideDialog", title="Add a slide in presentation", data-toggle="modal")
+              i.icon-plus &nbsp;
 
-        .slide
-          h3 Slide 1
+    .span9
+      .sldbox
+        ul.slides
