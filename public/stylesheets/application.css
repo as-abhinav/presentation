@@ -111,3 +111,6 @@ body form#newPresentation {
 body form#newPresentation .btn-primary {
   margin-right: 10px;
 }
+body #presentationContainer li {
+  margin-bottom: 20px;
+}

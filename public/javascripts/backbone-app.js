@@ -1,4 +1,5 @@
 
 $(function() {
-    app.presentationCollection = new app.PresentationCollection();
+    presentations = new Window.PresentationCollection;
+    app = new Window.AppView;
 });

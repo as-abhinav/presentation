@@ -7,8 +7,7 @@
             |   Create New Presentation
 
 
-#newPresentationDialog.modal.hide.fade(role="modal", aria-hidden="true", aria-labelledby="newPresentationDialogLabel")
-  form.form-horizontal(action="#")
+form#newPresentationDialog.form-horizontal.modal.hide.fade(action="#",role="modal", aria-hidden="true", aria-labelledby="newPresentationDialogLabel")
     .modal-header
         button.close(type="button", data-dismiss='modal', aria-hidden='true') x
         h3 New Presentation
@@ -35,7 +34,6 @@ hr
 ul#presentationContainer
 
 script#presentationTemplate(type="text/html")
-  li.row
     .span3
       #presentationsBox.pptbox
         .presentation

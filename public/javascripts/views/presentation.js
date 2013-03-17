@@ -1,36 +1,56 @@
 $(function() {
-    var appView = Backbone.View.extend({
-
-    });
 
     var $newPresentationDialog = $("#newPresentationDialog"),
-        presentationTemplate = $("#presentationTemplate").html(),
-        $presentationContainer = $("#presentationContainer");
+        presentationTemplate = $("#presentationTemplate").html();
 
-    $newPresentationDialog.on('submit','form', function(){
-        var $form = $(this);
-        app.createPresentation({
-            name: $form.find("#name").val(),
-            description: $form.find("#description").val()
-        });
-        console.log("Created " + app.presentationCollection);
-        $newPresentationDialog.modal('hide');
-        return false;
+    Window.AppView = Backbone.View.extend({
+        el : $("body"),
+
+        events : {
+           "submit form#newPresentationDialog" : "createNewPresentation"
+        },
+
+        initialize : function() {
+            this.listenTo(presentations, "add", this.addPresentation);
+        },
+
+        addPresentation : function(presentation) {
+            var presentationView = new Window.PresentationView({model:presentation});
+            this.$("#presentationContainer").append(presentationView.render().el);
+            return false;
+        },
+
+        createNewPresentation : function(){
+
+            //When use 'create' submits the forms and reloads the page...?
+            presentations.add({
+                name: $newPresentationDialog.find("#name").val(),
+                description: $newPresentationDialog.find("#description").val()
+            });
+            //When use 'create' does not execute the following...?
+            console.log("Created " + presentations);
+            $newPresentationDialog.modal('hide');
+            return false;
+        }
     });
 
-    app.createPresentation = function(obj) {
-        var newPresentation = new app.Presentation(obj);
-        app.presentationCollection.push(newPresentation);
-        $presentationContainer.append(_.template(presentationTemplate, obj))
+    Window.PresentationView = Backbone.View.extend({
+        tagName: "li",
+        className: "row",
 
-    };
-
-    app.PresentationView = Backbone.View.extend({
-        tagName: "ul",
-        id: "presentationContainer",
+        template :_.template($("#presentationTemplate").html()),
 
         events : {
             "click .remove" : "removePresentation"
+        },
+
+        initialize : function() {
+            this.listenTo(this.model, 'change', this.render);
+        },
+
+        render : function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
         },
 
         removePresentation : function() {

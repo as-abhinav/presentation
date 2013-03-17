@@ -1,6 +1,6 @@
-var app = {};
+
 $(function(){
-    app.Presentation = Backbone.Model.extend({
+    Window.Presentation = Backbone.Model.extend({
         defaults : function(){
           return {
               name : "New Presentation",
@@ -9,7 +9,7 @@ $(function(){
         }
     });
 
-    app.PresentationCollection = Backbone.Collection.extend({
-        model: app.Presentation
+    Window.PresentationCollection = Backbone.Collection.extend({
+        model: Window.Presentation
     })
 });
