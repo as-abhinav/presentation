@@ -97,6 +97,9 @@ body .sldbox:before {
   border-left-color: transparent;
   margin-top: -30px;
 }
+body form {
+  margin: 0;
+}
 body form textarea {
   width: 98%;
 }

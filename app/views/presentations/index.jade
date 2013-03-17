@@ -64,11 +64,11 @@ script#presentationTemplate(type="text/html")
           .title <%= title %>
           .desc <%= description %>
           .control
-            a.icon(href="#", title="Remove the presentation")
+            a.icon.trash(href="#", title="Remove the presentation")
               i.icon-trash &nbsp;
-            a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") 
+            // a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") 
               i.icon-play &nbsp;
-            a.icon.plus(href="#", title="Add a slide in presentation", id="addSlideDialogLink<%= id %>", data-ppt-id='<%= id %>') 
+            a.icon.plus(href="#", title="Add a slide in presentation") 
               i.icon-plus &nbsp;
 
     .span9
@@ -78,7 +78,7 @@ script#presentationTemplate(type="text/html")
 script#slideTemplate(type="text/html")
   li.slide
     h1 Slide
-    .control
+    // .control
       a.icon(href="#", title="Remove the presentation")
         i.icon-trash &nbsp;
 
@@ -86,8 +86,7 @@ script#playPresentationTemplate(type="text/html")
   ol.carousel-indicators
     .carousel-inner
       <% _.each(slides,function(item,key){ %>
-        .active.item
-          div <%= item.description %>
+      .active.item <%= item.description %>
       <% }); %>
     a.carousel-control.left(href='#playPresentationDialog', data-slide='prev') ‹
     a.carousel-control.right(href='#playPresentationDialog', data-slide='next') ›
