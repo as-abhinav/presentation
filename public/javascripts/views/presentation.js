@@ -53,8 +53,10 @@ $(function() {
             return this;
         },
 
-        removePresentation : function() {
+        removePresentation : function(event) {
           this.model.destroy();
+          this.$el.remove();
+          event.preventDefault();
         }
     })
 
