@@ -27,6 +27,7 @@ $(function() {
                 name: $newPresentationDialog.find("#name").val(),
                 description: $newPresentationDialog.find("#description").val()
             });
+            this.reset();
             //When use 'create' does not execute the following...?
             $newPresentationDialog.modal('hide');
             return false;
@@ -70,6 +71,7 @@ $(function() {
             model.slides.add({
                 markup : $newSlideDialog.find("#markup").val()
             });
+            this.reset();
             $newSlideDialog.modal('hide');
             return false;
         }
