@@ -38,7 +38,7 @@
       <div class="span12"><h2>Available Presentations</h2></div>
     </div>
     <ul id="presentationContainer" ng-controller="ListPresentationsCtrl">
-      <li class="row" data-ppt-id="0">
+      <li class="row" ng-repeat="presentation in presentations">
         <div class="span3">
           <div id="presentationsBox" class="pptbox">
             <div class="presentation">
@@ -104,26 +104,7 @@
       </div>
       <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a></div>
     </div>
-    <script id="presentationTemplate" type="text/html">
-      <li class="row">
-        <div class="span3">
-          <div id="presentationsBox" class="pptbox">
-            <div class="presentation">
-              <div class="title"><%= title %></div>
-              <div class="desc"><%= description %></div>
-              <div class="control"><a href="#" title="Remove the presentation" class="icon trash"><i class="icon-trash">
-                &nbsp;</i></a><!-- a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") <i class="icon-play">&nbsp;</i>--><a
-                href="#" title="Add a slide in presentation" class="icon plus"> <i class="icon-plus">&nbsp;</i></a></div>
-            </div>
-          </div>
-        </div>
-        <div class="span9">
-          <div class="sldbox">
-            <ul class="slides"></ul>
-          </div>
-        </div>
-      </li>
-    </script>
+
     <script id="slideTemplate" type="text/html">
       <li class="slide"><h1>Slide</h1>
         <!-- .control<a href="#" title="Remove the presentation" class="icon"><i class="icon-trash">&nbsp;</i></a>--></li>
