@@ -37,13 +37,13 @@
     <div class="row">
       <div class="span12"><h2>Available Presentations</h2></div>
     </div>
-    <ul id="presentationContainer">
+    <ul id="presentationContainer" ng-controller="ListPresentationsCtrl">
       <li class="row" data-ppt-id="0">
         <div class="span3">
           <div id="presentationsBox" class="pptbox">
             <div class="presentation">
-              <div class="title">title</div>
-              <div class="desc">description</div>
+              <div class="title">{{presentation.title}}</div>
+              <div class="desc">{{presentation.description}}</div>
               <div class="control"><a href="#" title="Remove the presentation" class="icon trash"><i class="icon-trash">
                 &nbsp;</i></a><!-- a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") <i class="icon-play">&nbsp;</i>--><a
                 href="#" title="Add a slide in presentation" class="icon plus"> <i class="icon-plus">&nbsp;</i></a></div>
@@ -58,7 +58,7 @@
       </li>
     </ul>
     <div id="addPresentationDialog" role="dialog" aria-labelledby="addPresentationDialogLabel" aria-hidden="true"
-         class="modal hide fade">
+         class="modal hide fade" ng-controller="AddNewPresentationCtrl">
       <form id="newPresentation" action="#" class="form-horizontal">
         <div class="modal-header">
           <button type="button" data-dismiss="modal" aria-hidden="true" class="close">X</button>
@@ -66,15 +66,14 @@
         <div class="modal-body">
           <div class="control-group"><label for="name" class="control-label">Name</label>
 
-            <div class="controls"><input id="name" type="text" name="name"></div>
+            <div class="controls"><input id="name" type="text" name="name" ng-model="presentation.title"></div>
           </div>
           <div class="control-group"><label for="description" class="control-label">Description</label>
-
-            <div class="controls"><input id="description" type="text" name="description"></div>
+            <div class="controls"><input id="description" type="text" name="description" ng-model="presentation.description"></div>
           </div>
         </div>
         <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary">Create Presentation</button>
+          <button type="submit" class="btn btn-primary" ng-click="presentation.addNew($event)">Create Presentation</button>
         </div>
       </form>
     </div>
