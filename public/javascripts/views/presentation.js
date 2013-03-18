@@ -81,6 +81,10 @@ $(function() {
 
         template :_.template($("#slideTemplate").html()),
 
+        events : {
+            "click .remove" : "removeSlide"
+        },
+
         initialize : function() {
             this.listenTo(this.model, 'change', this.render);
         },
@@ -88,6 +92,11 @@ $(function() {
         render : function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+        },
+        removeSlide : function(event) {
+            this.model.destroy();
+            this.$el.remove();
+            event.preventDefault();
         }
 
     });
