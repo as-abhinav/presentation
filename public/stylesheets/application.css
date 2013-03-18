@@ -114,3 +114,6 @@ body form#newPresentation .btn-primary {
 body #presentationContainer li {
   margin-bottom: 20px;
 }
+body .form-vertical textarea {
+  width: 95%;
+}

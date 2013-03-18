@@ -1,6 +1,7 @@
 $(function() {
 
     var $newPresentationDialog = $("#newPresentationDialog"),
+        $newSlideDialog = $("#newSlideDialog"),
         presentationTemplate = $("#presentationTemplate").html();
 
     Window.AppView = Backbone.View.extend({
@@ -21,14 +22,12 @@ $(function() {
         },
 
         createNewPresentation : function(){
-
             //When use 'create' submits the forms and reloads the page...?
             presentations.add({
                 name: $newPresentationDialog.find("#name").val(),
                 description: $newPresentationDialog.find("#description").val()
             });
             //When use 'create' does not execute the following...?
-            console.log("Created " + presentations);
             $newPresentationDialog.modal('hide');
             return false;
         }
@@ -46,6 +45,9 @@ $(function() {
 
         initialize : function() {
             this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model.slides, "add", this.addSlide);
+
+            $("#newSlideDialog").off("submit").on("submit", this.model, this.createNewSlide);
         },
 
         render : function() {
@@ -57,8 +59,38 @@ $(function() {
           this.model.destroy();
           this.$el.remove();
           event.preventDefault();
+        },
+        addSlide : function(slide) {
+            var slideView = new Window.SlideView({model:slide});
+            this.$(".slides").append(slideView.render().el);
+        },
+        createNewSlide : function(event) {
+            event.preventDefault();
+            var model = event.data;
+            model.slides.add({
+                markup : $newSlideDialog.find("#markup").val()
+            });
+            $newSlideDialog.modal('hide');
+            return false;
         }
-    })
+    });
+
+    Window.SlideView = Backbone.View.extend({
+        tagName: "li",
+        className: "slide",
+
+        template :_.template($("#slideTemplate").html()),
+
+        initialize : function() {
+            this.listenTo(this.model, 'change', this.render);
+        },
+
+        render : function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+
+    });
 
 
 

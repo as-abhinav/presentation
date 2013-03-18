@@ -19,12 +19,24 @@ form#newPresentationDialog.form-horizontal.modal.hide.fade(action="#",role="moda
         .control-group
             label.control-label(for="description") Description
             .controls
-              textarea#description(row="5", name="description")
+              textarea#description(rows="5", name="description")
     .modal-footer
         button.btn(type="button", data-dismiss='modal', aria-hidden="true") Close
         button.btn(type="reset") Cancel
-        button.btn.btn-primary(type="submit", aria-hidden="true") Create Presentation
+        button.btn.btn-primary(type="submit", aria-hidden="true") Add Presentation
 
+form#newSlideDialog.modal.hide.fade.form-vertical(role="dialog", aria-labelledby="newSlideDialogLabel", aria-hidden="true")
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3 New Slide
+    .modal-body
+      .control-group
+        label.control-label(for="markup") Markup
+        .controls
+          textarea#markup(rows="10", name="markup")
+    .modal-footer
+      button.btn(type="button", data-dismiss='modal') Cancel
+      button.btn.btn-primary(type="submit") Add Slide
 
 hr
 .row
@@ -44,9 +56,16 @@ script#presentationTemplate(type="text/html")
               i.icon-trash &nbsp;
             a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
               i.icon-play &nbsp;
-            a.icon(href="#addSlideDialog", title="Add a slide in presentation", data-toggle="modal")
+            a.icon.add-slide(href="#newSlideDialog", title="Add a slide in presentation", data-toggle="modal")
               i.icon-plus &nbsp;
 
     .span9
       .sldbox
         ul.slides
+
+
+script#slideTemplate(type="text/html")
+    <%= markup %>
+    .control
+      a.icon(href="#", title="Remove the presentation")
+        i.icon-trash &nbsp;
