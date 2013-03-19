@@ -6,15 +6,7 @@
   <link media="screen" rel="stylesheet" type="text/css" href="./css/bootstrap.css">
   <link media="screen" rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css">
   <link media="screen" rel="stylesheet" type="text/css" href="./css/application.css">
-  <script src="lib/jquery-1.9.1.min.js"></script>
-  <script src="lib/angular/angular.js"></script>
-  <script src="js/bootstrap.js"></script>
-  <script src="lib/underscore.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/directives.js"></script>
+
   <meta name="csrf-param" content="authenticity_token">
   <meta name="csrf-token" content="dbd8e13f356a2d9ac41a6b26e38ee264c70ea52f">
 </head>
@@ -34,19 +26,27 @@
       </div>
     </div>
     <hr>
+
     <div class="row">
       <div class="span12"><h2>Available Presentations</h2></div>
     </div>
+
+
     <ul id="presentationContainer" ng-controller="ListPresentationsCtrl">
       <li class="row" ng-repeat="presentation in presentations">
         <div class="span3">
-          <div id="presentationsBox" class="pptbox">
+          <div id="{{presentation.id}}" class="pptbox">
             <div class="presentation">
               <div class="title">{{presentation.title}}</div>
               <div class="desc">{{presentation.description}}</div>
               <div class="control"><a href="#" title="Remove the presentation" class="icon trash"><i class="icon-trash">
-                &nbsp;</i></a><!-- a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal") <i class="icon-play">&nbsp;</i>--><a
-                href="#" title="Add a slide in presentation" class="icon plus"> <i class="icon-plus">&nbsp;</i></a></div>
+                &nbsp;</i></a>
+                <!-- a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
+                <i class="icon-play">&nbsp;</i>-->
+                <a href="#addSlideDialog" title="Add a slide in presentation" data-toggle="modal" class="icon plus" ng-click="setCurrentPresentation(presentation)">
+                  <i class="icon-plus">&nbsp;</i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -77,23 +77,35 @@
         </div>
       </form>
     </div>
+
+
+
+
     <div id="addSlideDialog" role="dialog" aria-labelledby="addSlideDialogLabel" aria-hidden="true"
-         class="modal hide fade">
+         class="modal hide fade" ng-controller="AddSlideCtrl">
       <form id="newSlide" action="#" class="form-vertical">
         <div class="modal-header">
           <button type="button" data-dismiss="modal" aria-hidden="true" class="close">?</button>
-          <h3>Add New Slide</h3></div>
+          <h3>Add New Slide for - <em>{{currentPresentation.title}}</em></h3></div>
         <div class="modal-body">
-          <div class="control-group"><label for="markup" class="control-label">Markup</label>
-
-            <div class="controls"><textarea id="markup" rows="10" name="markup"></textarea></div>
+        <div class="control-group">
+          <label for="markup" class="control-label">Markup</label>
+          <div class="controls">
+            <textarea id="markup" rows="10" name="markup"></textarea>
           </div>
         </div>
+        </div>
         <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary">Add Slide</button>
+          <button type="submit" class="btn btn-primary" ng-click="addSlideToPresentation($event)">Add Slide</button>
         </div>
       </form>
     </div>
+
+
+
+
+
+
     <div id="playPresentationDialog" role="dialog" aria-labelledby="playPresentationDialogLabel" aria-hidden="true"
          class="container modal hide fade">
       <div class="modal-header">
@@ -122,4 +134,13 @@
     <footer><p>@ UI Bootcamp - III (2013)</p></footer>
   </div>
 </body>
+<script src="lib/jquery-1.9.1.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="lib/angular/angular.js"></script>
+<script src="lib/underscore.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
 </html>

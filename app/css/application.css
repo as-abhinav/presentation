@@ -110,3 +110,7 @@ body ol {
 body li {
   list-style: none;
 }
+
+form#newPresentation input#name{
+  text-transform: uppercase;
+}
