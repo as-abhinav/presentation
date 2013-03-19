@@ -11,11 +11,13 @@
   <meta name="csrf-token" content="dbd8e13f356a2d9ac41a6b26e38ee264c70ea52f">
 </head>
 <body chromeextension-color-pick.com="true">
+
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
       <div class="container"><a href="#" class="brand">Markup Presentation</a></div>
     </div>
   </div>
+
   <div class="container">
     <div class="navbar">
       <div class="navbar-inner">
@@ -41,6 +43,10 @@
               <div class="desc">{{presentation.description}}</div>
               <div class="control"><a href="#" title="Remove the presentation" class="icon trash"><i class="icon-trash">
                 &nbsp;</i></a>
+
+                <a href="#playPresentationDialog" title="Play the presentation" data-toggle="modal" class="icon play" ng-click="playPresentation(presentation)">
+                  <i class="icon-play">&nbsp;</i>
+                </a>
                 <!-- a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
                 <i class="icon-play">&nbsp;</i>-->
                 <a href="#addSlideDialog" title="Add a slide in presentation" data-toggle="modal" class="icon plus" ng-click="setCurrentPresentation(presentation)">
@@ -54,14 +60,15 @@
           <div class="sldbox">
             <ul class="slides">
               <li class="slide" ng-repeat="slide in presentation.slides">
-                <h1>Slide</h1>
-                {{slide.content}}
+                <h1>Slide - {{slide.id}}</h1>
+                <!--{{slide.content}}-->
               </li>
             </ul>
           </div>
         </div>
       </li>
     </ul>
+
     <div id="addPresentationDialog" role="dialog" aria-labelledby="addPresentationDialogLabel" aria-hidden="true"
          class="modal hide fade" ng-controller="AddNewPresentationCtrl">
       <form id="newPresentation" action="#" class="form-horizontal">

@@ -2,7 +2,8 @@
 
 /*Models*/
 var presentations = [],
-    totalCount = 0,
+    presentationCount = 0,
+    slidesCount = 0,
     currentPresentation={
       id: "",
       title: "",
@@ -27,11 +28,12 @@ function AddNewPresentationCtrl($scope) {
     $("#newPresentation")[0].reset();
     $("#addPresentationDialog").modal('toggle');
     $scope.presentations.push({
-      id: "p"+ totalCount++,
+      id: "p"+ presentationCount++,
       title: $scope.presentation.title,
       description: $scope.presentation.description,
       slides: []
     });
+    slidesCount = 0;
     return false;
   };
 
@@ -56,11 +58,13 @@ function AddSlideCtrl($scope){
     for(var index= 0,len=$scope.presentations.length;index<len;index++){
       if($scope.currentPresentation.id == $scope.presentations[index].id){
         $scope.presentations[index].slides.push({
-          content:$scope.slide.content
+          content:$scope.slide.content,
+          id: slidesCount++
         });
         break;
       }
     }
+    $("#newSlide")[0].reset();
     $("#addSlideDialog").modal('toggle');
     return false;
   };
