@@ -6,12 +6,14 @@ var presentations = [],
     currentPresentation={
       id: "",
       title: "",
-      description: ""
+      description: "",
+      slides: []
     },
     newPresentation = {
       id: "p1",
       title: "",
-      description: ""
+      description: "",
+      slides: []
     };
 
 
@@ -27,7 +29,8 @@ function AddNewPresentationCtrl($scope) {
     $scope.presentations.push({
       id: "p"+ totalCount++,
       title: $scope.presentation.title,
-      description: $scope.presentation.description
+      description: $scope.presentation.description,
+      slides: []
     });
     return false;
   };
@@ -47,11 +50,15 @@ function ListPresentationsCtrl($scope){
 function AddSlideCtrl($scope){
   $scope.presentations = presentations;
   $scope.currentPresentation = currentPresentation;
+  $scope.slide = {content:""};
   $scope.addSlideToPresentation = function($event){
     $event.preventDefault();
     for(var index= 0,len=$scope.presentations.length;index<len;index++){
       if($scope.currentPresentation.id == $scope.presentations[index].id){
-        //Still have to add Slides to current presentation.
+        $scope.presentations[index].slides.push({
+          content:$scope.slide.content
+        });
+        break;
       }
     }
     $("#addSlideDialog").modal('toggle');

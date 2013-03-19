@@ -52,7 +52,12 @@
         </div>
         <div class="span9">
           <div class="sldbox">
-            <ul class="slides"></ul>
+            <ul class="slides">
+              <li class="slide" ng-repeat="slide in presentation.slides">
+                <h1>Slide</h1>
+                {{slide.content}}
+              </li>
+            </ul>
           </div>
         </div>
       </li>
@@ -91,7 +96,7 @@
         <div class="control-group">
           <label for="markup" class="control-label">Markup</label>
           <div class="controls">
-            <textarea id="markup" rows="10" name="markup"></textarea>
+            <textarea id="markup" rows="10" name="markup" ng-model="slide.content"></textarea>
           </div>
         </div>
         </div>

@@ -12,6 +12,7 @@ body .pptbox .presentation,
 body .sldbox .presentation,
 body .pptbox .slide,
 body .sldbox .slide {
+  text-align: center;
   background: white;
   height: 180px;
   top: 0;
