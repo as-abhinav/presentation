@@ -115,3 +115,6 @@ body li {
 form#newPresentation input#name{
   text-transform: uppercase;
 }
+.uppercase{
+  text-transform: uppercase;
+}

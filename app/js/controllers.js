@@ -46,6 +46,16 @@ function ListPresentationsCtrl($scope){
     $scope.currentPresentation.id = presentation.id;
     $scope.currentPresentation.title = presentation.title;
     $scope.currentPresentation.description = presentation.description;
+    $scope.currentPresentation.slides = presentation.slides;
+  };
+  $scope.deletePresentation = function(presentation){ //Buggy
+    for(var index= 0,len=$scope.presentations.length;index<len;index++){
+      if(presentation.id == $scope.presentations[index].id){
+        $scope.presentations = $scope.presentations.slice(0,index).concat( $scope.presentations.slice(index+1) );
+        presentations = $scope.presentations;
+        return;
+      }
+    }
   };
 };
 
@@ -57,10 +67,11 @@ function AddSlideCtrl($scope){
     $event.preventDefault();
     for(var index= 0,len=$scope.presentations.length;index<len;index++){
       if($scope.currentPresentation.id == $scope.presentations[index].id){
-        $scope.presentations[index].slides.push({
+        var slide = {
           content:$scope.slide.content,
-          id: slidesCount++
-        });
+            id: slidesCount++
+        };
+        $scope.presentations[index].slides.push(slide);
         break;
       }
     }
@@ -68,6 +79,11 @@ function AddSlideCtrl($scope){
     $("#addSlideDialog").modal('toggle');
     return false;
   };
+};
+
+function PlayPresentationCtrl($scope){
+  $scope.currentPresentation = currentPresentation;
+  $scope.slides = $scope.currentPresentation.slides;
 };
 
 

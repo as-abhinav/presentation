@@ -6,6 +6,7 @@
   <link media="screen" rel="stylesheet" type="text/css" href="./css/bootstrap.css">
   <link media="screen" rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css">
   <link media="screen" rel="stylesheet" type="text/css" href="./css/application.css">
+  <link media="screen" rel="stylesheet" type="text/css" href="./css/bootstrap_override.css">
 
   <meta name="csrf-param" content="authenticity_token">
   <meta name="csrf-token" content="dbd8e13f356a2d9ac41a6b26e38ee264c70ea52f">
@@ -39,16 +40,15 @@
         <div class="span3">
           <div id="{{presentation.id}}" class="pptbox">
             <div class="presentation">
-              <div class="title">{{presentation.title}}</div>
+              <div class="title uppercase">{{presentation.title}}</div>
               <div class="desc">{{presentation.description}}</div>
-              <div class="control"><a href="#" title="Remove the presentation" class="icon trash"><i class="icon-trash">
-                &nbsp;</i></a>
-
-                <a href="#playPresentationDialog" title="Play the presentation" data-toggle="modal" class="icon play" ng-click="playPresentation(presentation)">
+              <div class="control">
+                <a href="#" title="Remove the presentation" class="icon trash" ng-click="deletePresentation(presentation)">
+                  <i class="icon-trash">&nbsp;</i>
+                </a>
+                <a href="#playPresentationDialog" title="Play the presentation" data-toggle="modal" class="icon play" ng-click="setCurrentPresentation(presentation)">
                   <i class="icon-play">&nbsp;</i>
                 </a>
-                <!-- a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
-                <i class="icon-play">&nbsp;</i>-->
                 <a href="#addSlideDialog" title="Add a slide in presentation" data-toggle="modal" class="icon plus" ng-click="setCurrentPresentation(presentation)">
                   <i class="icon-plus">&nbsp;</i>
                 </a>
@@ -98,7 +98,7 @@
       <form id="newSlide" action="#" class="form-vertical">
         <div class="modal-header">
           <button type="button" data-dismiss="modal" aria-hidden="true" class="close">?</button>
-          <h3>Add New Slide for - <em>{{currentPresentation.title}}</em></h3></div>
+          <h3>Add New Slide for - <em class="uppercase">{{currentPresentation.title}}</em></h3></div>
         <div class="modal-body">
         <div class="control-group">
           <label for="markup" class="control-label">Markup</label>
@@ -119,12 +119,22 @@
 
 
     <div id="playPresentationDialog" role="dialog" aria-labelledby="playPresentationDialogLabel" aria-hidden="true"
-         class="container modal hide fade">
+         class="container modal hide fade" ng-controller="PlayPresentationCtrl">
       <div class="modal-header">
-        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">?</button>
-        <h3>Play Presentation</h3></div>
+        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">X</button>
+        <h3>Play Presentation</h3>
+      </div>
       <div class="modal-body">
-        <div id="myCarousel" class="carousel slide"></div>
+        <div id="myCarousel" class="carousel slide">
+          <ol class="carousel-indicators" >
+            <div class="carousel-inner">
+              <div class="active item"><h2 class="uppercase">{{currentPresentation.title}}</h2></div>
+              <div class="item" ng-repeat="slide in currentPresentation.slides">{{slide.content}}</div>
+            </div>
+            <a href="#playPresentationDialog" data-slide="prev" class="carousel-control left">&lsaquo;</a><a
+            href="#playPresentationDialog" data-slide="next" class="carousel-control right">&rsaquo;</a>
+          </ol>
+        </div>
       </div>
       <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a></div>
     </div>
@@ -139,8 +149,8 @@
           <div class="active item"><%= item.description %></div>
           <% }); %>
         </div>
-        <a href="#playPresentationDialog" data-slide="prev" class="carousel-control left">‹</a><a
-        href="#playPresentationDialog" data-slide="next" class="carousel-control right">›</a></ol>
+        <a href="#playPresentationDialog" data-slide="prev" class="carousel-control left"> < </a><a
+        href="#playPresentationDialog" data-slide="next" class="carousel-control right"> > </a></ol>
     </script>
     <hr>
     <footer><p>@ UI Bootcamp - III (2013)</p></footer>
