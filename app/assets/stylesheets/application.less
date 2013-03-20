@@ -6,21 +6,21 @@ body{
 
 body{
 	.pptbox, .sldbox{
+		position: relative;
+		height: 200px;
 		border: solid 1px #ccc;
 		background: #eee;
-		height: 200px;
-		position: relative;
 
 		.presentation, .slide{
-			background: white;
-			height: 180px;
 			top: 0;
 			bottom: 0;
-			width: 90%;
 			margin: 10px;
+			width: 90%;
+			height: 180px;
 			border: solid 1px rgb(170, 170, 170);
-			box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
 			border-radius: 10px;
+			background: white;
+			box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.2);
 			&:hover{
 				.control{
 					bottom: 0;
@@ -34,44 +34,44 @@ body{
 				text-align: center;
 			}
 			.title{
-				font-size: 18px;
 				padding-top: 70px;
+				font-size: 18px;
 			}
 			.desc{
 				font-style: italic;
 			}
 		}
 		.slide{
-			display: inline-block;
 			position: relative;
+			display: inline-block;
 			overflow: hidden;
 			width: 200px;
 			h1{
-				font-size: 16px;
-				font-weight: normal;
-				text-align: center;
-				padding-top: 50%;
-				line-height: 16px;
 				margin-top: -16px;
+				padding-top: 50%;
+				text-align: center;
+				font-weight: normal;
+				font-size: 16px;
+				line-height: 16px;
 
 			}
 		}
 		.slides{
-			white-space: nowrap;
 			overflow-x: auto;
+			white-space: nowrap;
 		}
 
 	}
 	.control {
 		position: absolute;
 		bottom: -40px;
-		border-top: solid 1px rgb(221, 221, 221);
-		width: 100%;	
+		width: 100%;
+		border-top: solid 1px rgb(221, 221, 221);	
 		.icon{
 			display: block;
 			float: right;
-			padding: 5px 10px;
 			margin: 5px;
+			padding: 5px 10px;
 			border-radius: 5px;
 			&:hover{
 				background: #efefef;
@@ -82,14 +82,14 @@ body{
 		&:before{
 			position: absolute;
 			top: 50%;
-			content: '';
-			display: block;
-			border: solid 30px rgb(238, 238, 238);
 			left: -60px;
+			display: block;
+			margin-top: -30px;
+			border: solid 30px rgb(238, 238, 238);
 			border-top-color: transparent;
 			border-bottom-color: transparent;
 			border-left-color: transparent;
-			margin-top: -30px;
+			content: '';
 		}
 	}
 
