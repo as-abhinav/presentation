@@ -35,7 +35,7 @@
     </div>
 
 
-    <ul id="presentationContainer" ng-controller="ListPresentationsCtrl">
+    <ul id="presentationContainer" ng-controller="PresentationsListCtrl">
       <li class="row" ng-repeat="presentation in presentations">
         <div class="span3">
           <div id="{{presentation.id}}" class="pptbox">
@@ -43,13 +43,13 @@
               <div class="title uppercase">{{presentation.title}}</div>
               <div class="desc">{{presentation.description}}</div>
               <div class="control">
-                <a href="#" title="Remove the presentation" class="icon trash" ng-click="deletePresentation(presentation)">
+                <a href="#" title="Remove the presentation" class="icon trash" ng-click="remove(presentation, $index)">
                   <i class="icon-trash">&nbsp;</i>
                 </a>
                 <a href="#playPresentationDialog" title="Play the presentation" data-toggle="modal" class="icon play" ng-click="setCurrentPresentation(presentation)">
                   <i class="icon-play">&nbsp;</i>
                 </a>
-                <a href="#addSlideDialog" title="Add a slide in presentation" data-toggle="modal" class="icon plus" ng-click="setCurrentPresentation(presentation)">
+                <a href="#addSlideDialog" title="Add a slide in presentation" data-toggle="modal" class="icon plus" ng-click="addSlide($index)">
                   <i class="icon-plus">&nbsp;</i>
                 </a>
               </div>
@@ -60,8 +60,14 @@
           <div class="sldbox">
             <ul class="slides">
               <li class="slide" ng-repeat="slide in presentation.slides">
-                <h1>Slide - {{slide.id}}</h1>
-                <!--{{slide.content}}-->
+                <div ng-bind-html-unsafe="slide.content" class="slide-content-small">
+
+                </div>
+                <div class="control">
+                  <a href="#" title="Remove the presentation" class="icon trash" ng-click="removeSlide(presentation, $index)">
+                    <i class="icon-trash">&nbsp;</i>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
@@ -70,88 +76,49 @@
     </ul>
 
     <div id="addPresentationDialog" role="dialog" aria-labelledby="addPresentationDialogLabel" aria-hidden="true"
-         class="modal hide fade" ng-controller="AddNewPresentationCtrl">
-      <form id="newPresentation" action="#" class="form-horizontal">
+         class="modal hide fade" ng-controller="AddPresentationCtrl" >
+      <form class="form-horizontal" ng-submit="submit()">
         <div class="modal-header">
           <button type="button" data-dismiss="modal" aria-hidden="true" class="close">X</button>
           <h3>Create New Presentation</h3></div>
         <div class="modal-body">
           <div class="control-group"><label for="name" class="control-label">Name</label>
 
-            <div class="controls"><input id="name" type="text" name="name" ng-model="presentation.title"></div>
+            <div class="controls"><input id="name" type="text" name="title" ng-model="title"></div>
           </div>
           <div class="control-group"><label for="description" class="control-label">Description</label>
-            <div class="controls"><input id="description" type="text" name="description" ng-model="presentation.description"></div>
+            <div class="controls"><input id="description" type="text" name="description" ng-model="description"></div>
           </div>
         </div>
         <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary" ng-click="presentation.addNew($event)">Create Presentation</button>
+          <button type="submit" class="btn btn-primary">Create Presentation</button>
         </div>
       </form>
     </div>
 
 
-
-
     <div id="addSlideDialog" role="dialog" aria-labelledby="addSlideDialogLabel" aria-hidden="true"
-         class="modal hide fade" ng-controller="AddSlideCtrl">
-      <form id="newSlide" action="#" class="form-vertical">
+         class="modal hide fade" ng-controller="AddSlideCtrl" >
+      <form id="newSlide" class="form-vertical" ng-submit="submit()">
         <div class="modal-header">
           <button type="button" data-dismiss="modal" aria-hidden="true" class="close">?</button>
           <h3>Add New Slide for - <em class="uppercase">{{currentPresentation.title}}</em></h3></div>
         <div class="modal-body">
-        <div class="control-group">
-          <label for="markup" class="control-label">Markup</label>
-          <div class="controls">
-            <textarea id="markup" rows="10" name="markup" ng-model="slide.content"></textarea>
+          <div class="control-group">
+            <label for="markup" class="control-label">Markup</label>
+
+            <div class="controls">
+              <textarea id="markup" rows="10" name="markup" ng-model="content"></textarea>
+            </div>
           </div>
         </div>
-        </div>
         <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a>
-          <button type="submit" class="btn btn-primary" ng-click="addSlideToPresentation($event)">Add Slide</button>
+          <input type="submit" class="btn btn-primary" value="Add Slide" />
+          <!--<button type="submit" class="btn btn-primary">Add Slide</button>-->
         </div>
       </form>
     </div>
 
-
-
-
-
-
-    <div id="playPresentationDialog" role="dialog" aria-labelledby="playPresentationDialogLabel" aria-hidden="true"
-         class="container modal hide fade" ng-controller="PlayPresentationCtrl">
-      <div class="modal-header">
-        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">X</button>
-        <h3>Play Presentation</h3>
-      </div>
-      <div class="modal-body">
-        <div id="myCarousel" class="carousel slide">
-          <ol class="carousel-indicators" >
-            <div class="carousel-inner">
-              <div class="active item"><h2 class="uppercase">{{currentPresentation.title}}</h2></div>
-              <div class="item" ng-repeat="slide in currentPresentation.slides">{{slide.content}}</div>
-            </div>
-            <a href="#playPresentationDialog" data-slide="prev" class="carousel-control left">&lsaquo;</a><a
-            href="#playPresentationDialog" data-slide="next" class="carousel-control right">&rsaquo;</a>
-          </ol>
-        </div>
-      </div>
-      <div class="modal-footer"><a href="#" data-dismiss="modal" class="btn">Cancel</a></div>
-    </div>
-
-    <script id="slideTemplate" type="text/html">
-      <li class="slide"><h1>Slide</h1>
-        <!-- .control<a href="#" title="Remove the presentation" class="icon"><i class="icon-trash">&nbsp;</i></a>--></li>
-    </script>
-    <script id="playPresentationTemplate" type="text/html">
-      <ol class="carousel-indicators">
-        <div class="carousel-inner"><% _.each(slides,function(item,key){ %>
-          <div class="active item"><%= item.description %></div>
-          <% }); %>
-        </div>
-        <a href="#playPresentationDialog" data-slide="prev" class="carousel-control left"> < </a><a
-        href="#playPresentationDialog" data-slide="next" class="carousel-control right"> > </a></ol>
-    </script>
     <hr>
     <footer><p>@ UI Bootcamp - III (2013)</p></footer>
   </div>

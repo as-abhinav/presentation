@@ -1,96 +1,45 @@
 'use strict';
 
-/*Models*/
 var presentations = [],
-    presentationCount = 0,
-    slidesCount = 0,
-    currentPresentation={
-      id: "",
-      title: "",
-      description: "",
-      slides: []
-    },
-    newPresentation = {
-      id: "p1",
-      title: "",
-      description: "",
-      slides: []
-    };
-
+    obj = { index :  0};
 
 /* Controllers */
-
-function AddNewPresentationCtrl($scope) {
-  $scope.presentation = newPresentation;
+function AddPresentationCtrl($scope) {
   $scope.presentations = presentations;
-  $scope.presentation.addNew = function($event){
-    $event.preventDefault();
-    $("#newPresentation")[0].reset();
-    $("#addPresentationDialog").modal('toggle');
+  $scope.submit = function(){
+    console.log("submit");
     $scope.presentations.push({
-      id: "p"+ presentationCount++,
-      title: $scope.presentation.title,
-      description: $scope.presentation.description,
+      title: $scope.title,
+      description: $scope.description,
       slides: []
     });
-    slidesCount = 0;
-    return false;
+    $scope.title = "";
+    $scope.description = "";
+    $('#addPresentationDialog').modal('hide'); // BAD: not sure how to this without using DOM api
   };
-
-};
-
-function ListPresentationsCtrl($scope){
+}
+function PresentationsListCtrl($scope){
   $scope.presentations = presentations;
-  $scope.currentPresentation = currentPresentation;
-  $scope.setCurrentPresentation = function(presentation){
-    $scope.currentPresentation.id = presentation.id;
-    $scope.currentPresentation.title = presentation.title;
-    $scope.currentPresentation.description = presentation.description;
-    $scope.currentPresentation.slides = presentation.slides;
+  $scope.acvitePresentation = obj;
+  $scope.remove = function(presenation, index){
+    $scope.presentations.splice(index,1);
   };
-  $scope.deletePresentation = function(presentation){ //Buggy
-    for(var index= 0,len=$scope.presentations.length;index<len;index++){
-      if(presentation.id == $scope.presentations[index].id){
-        $scope.presentations = $scope.presentations.slice(0,index).concat( $scope.presentations.slice(index+1) );
-        presentations = $scope.presentations;
-        return;
-      }
-    }
+  $scope.addSlide =function(index){
+    $scope.acvitePresentation.index = index;
+    console.log($scope.acvitePresentation.index);
+  };
+  $scope.removeSlide = function(presentation, index){
+    console.dir(presentation);
+    console.log(index);
+    var idx = $scope.presentations.indexOf(presentation);
+    $scope.presentations[idx].slides.splice(index, 1);
   };
 };
 
 function AddSlideCtrl($scope){
+  $scope.acvitePresentation = obj;
   $scope.presentations = presentations;
-  $scope.currentPresentation = currentPresentation;
-  $scope.slide = {content:""};
-  $scope.addSlideToPresentation = function($event){
-    $event.preventDefault();
-    for(var index= 0,len=$scope.presentations.length;index<len;index++){
-      if($scope.currentPresentation.id == $scope.presentations[index].id){
-        var slide = {
-          content:$scope.slide.content,
-            id: slidesCount++
-        };
-        $scope.presentations[index].slides.push(slide);
-        break;
-      }
-    }
-    $("#newSlide")[0].reset();
-    $("#addSlideDialog").modal('toggle');
-    return false;
-  };
-};
-
-function PlayPresentationCtrl($scope){
-  $scope.currentPresentation = currentPresentation;
-  $scope.slides = $scope.currentPresentation.slides;
-};
-
-
-function MyCtrl1() {}
-MyCtrl1.$inject = [];
-
-
-function MyCtrl2() {
+  $scope.submit = function(){
+    $scope.presentations[$scope.acvitePresentation.index].slides.push({"content": $scope.content});
+  }
 }
-MyCtrl2.$inject = [];

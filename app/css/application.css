@@ -118,3 +118,24 @@ form#newPresentation input#name{
 .uppercase{
   text-transform: uppercase;
 }
+
+body .pptbox .slide h1, body .sldbox .slide div.slide-content-small{
+  background: #a9a9a9;
+
+}
+body .pptbox .slide h1, body .sldbox .slide div.slide-content-small h1{
+  margin: 0;
+  padding: 0;
+  background: #dcdcdc;
+  color:black;
+}
+
+body .pptbox .slide h1, body .sldbox .slide div.slide-content-small ul{
+  margin: 0;
+  padding-left: 20px;
+  color:black;
+}
+body .pptbox .slide h1, body .sldbox .slide div.slide-content-small ul li{
+  text-align: left;
+  list-style-type: disc;
+}
