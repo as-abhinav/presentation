@@ -21,16 +21,15 @@ $(function() {
             return false;
         },
 
-        createNewPresentation : function(){
+        createNewPresentation : function(event){
             //When use 'create' submits the forms and reloads the page...?
+            event.preventDefault();
             presentations.add({
                 name: $newPresentationDialog.find("#name").val(),
                 description: $newPresentationDialog.find("#description").val()
             });
-            this.reset();
-            //When use 'create' does not execute the following...?
+            event.target.reset();
             $newPresentationDialog.modal('hide');
-            return false;
         }
     });
 
@@ -96,9 +95,9 @@ $(function() {
             return this;
         },
         removeSlide : function(event) {
+            event.preventDefault();
             this.model.destroy();
             this.$el.remove();
-            event.preventDefault();
         }
 
     });

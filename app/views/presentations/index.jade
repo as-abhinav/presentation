@@ -22,7 +22,6 @@ form#newPresentationDialog.form-horizontal.modal.hide.fade(action="#",role="moda
               textarea#description(rows="5", name="description")
     .modal-footer
         button.btn(type="button", data-dismiss='modal', aria-hidden="true") Close
-        button.btn(type="reset") Cancel
         button.btn.btn-primary(type="submit", aria-hidden="true") Add Presentation
 
 form#newSlideDialog.modal.hide.fade.form-vertical(role="dialog", aria-labelledby="newSlideDialogLabel", aria-hidden="true")
@@ -35,7 +34,7 @@ form#newSlideDialog.modal.hide.fade.form-vertical(role="dialog", aria-labelledby
         .controls
           textarea#markup(rows="10", name="markup")
     .modal-footer
-      button.btn(type="button", data-dismiss='modal') Cancel
+      button.btn(type="button", data-dismiss='modal') Close
       button.btn.btn-primary(type="submit") Add Slide
 
 hr
