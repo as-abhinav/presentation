@@ -1,11 +1,11 @@
 
 $(function(){
-    Window.Presentation = Backbone.Model.extend({
+    app.Presentation = Backbone.Model.extend({
         defaults : function(){
           return {
               name : "New Presentation",
               description : "An Empty Presentation. Add Some slides.",
-              slides: new Window.SlideCollection
+              slides: new app.SlideCollection
 
           }
         },
@@ -16,11 +16,11 @@ $(function(){
         }
     });
 
-    Window.PresentationCollection = Backbone.Collection.extend({
-        model: Window.Presentation
+    app.PresentationCollection = Backbone.Collection.extend({
+        model: app.Presentation
     });
 
-    Window.Slide = Backbone.Model.extend({
+    app.Slide = Backbone.Model.extend({
         defaults : function(){
             return {
                 markup : "Presentation Slide"
@@ -32,7 +32,7 @@ $(function(){
 
     });
 
-    Window.SlideCollection = Backbone.Collection.extend({
-        model : Window.Slide
+    app.SlideCollection = Backbone.Collection.extend({
+        model : app.Slide
     });
 });

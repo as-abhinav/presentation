@@ -37,6 +37,16 @@ form#newSlideDialog.modal.hide.fade.form-vertical(role="dialog", aria-labelledby
       button.btn(type="button", data-dismiss='modal') Close
       button.btn.btn-primary(type="submit") Add Slide
 
+#playPresentationDialog.container.modal.hide.fade(role="dialog", aria-labelledby="playPresentationDialogLabel", aria-hidden="true")
+  .modal-header
+    button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+    h3 Play Presentation
+  .modal-body
+    #myCarousel.carousel.slide
+  .modal-footer
+    a.btn.close(href='#', data-dismiss='modal') Close
+
+
 hr
 .row
   .span12
@@ -53,7 +63,7 @@ script#presentationTemplate(type="text/html")
           .control
             a.icon.remove(href="#", title="Remove the presentation")
               i.icon-trash &nbsp;
-            a.icon(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
+            a.icon.play(href="#playPresentationDialog", title="Play the presentation", data-toggle="modal")
               i.icon-play &nbsp;
             a.icon.add-slide(href="#newSlideDialog", title="Add a slide in presentation", data-toggle="modal")
               i.icon-plus &nbsp;
@@ -68,3 +78,12 @@ script#slideTemplate(type="text/html")
     .control
       a.icon.remove(href="#", title="Remove the presentation")
         i.icon-trash &nbsp;
+
+script#playPresentationTemplate(type="text/html")
+    ol.carousel-indicators
+    .carousel-inner
+      <% _.each(slides,function(item,key){ %>
+      .item <%= item.markup %>
+      <% }); %>
+    a.carousel-control.left(href='#playPresentationDialog', data-slide='prev') ‹
+    a.carousel-control.right(href='#playPresentationDialog', data-slide='next') ›

@@ -2,21 +2,25 @@ $(function() {
 
     var $newPresentationDialog = $("#newPresentationDialog"),
         $newSlideDialog = $("#newSlideDialog"),
-        presentationTemplate = $("#presentationTemplate").html();
+        $presentationPlayer = $("#playPresentationDialog"),
+        presentationTemplate = _.template($("#presentationTemplate").html()),
+        slideTemplate = _.template($("#slideTemplate").html()),
+        presentationPlayerTemplate = _.template($("#playPresentationTemplate").html());
 
-    Window.AppView = Backbone.View.extend({
+    app.View = Backbone.View.extend({
         el : $("body"),
 
         events : {
-           "submit form#newPresentationDialog" : "createNewPresentation"
+           "submit form#newPresentationDialog" : "createNewPresentation",
+           "click #playPresentationDialog .close" : "closePresentationPlay"
         },
 
         initialize : function() {
-            this.listenTo(presentations, "add", this.addPresentation);
+            this.listenTo(app.presentations, "add", this.addPresentation);
         },
 
         addPresentation : function(presentation) {
-            var presentationView = new Window.PresentationView({model:presentation});
+            var presentationView = new app.PresentationView({model:presentation});
             this.$("#presentationContainer").append(presentationView.render().el);
             return false;
         },
@@ -24,34 +28,37 @@ $(function() {
         createNewPresentation : function(event){
             //When use 'create' submits the forms and reloads the page...?
             event.preventDefault();
-            presentations.add({
+            app.presentations.add({
                 name: $newPresentationDialog.find("#name").val(),
                 description: $newPresentationDialog.find("#description").val()
             });
             event.target.reset();
             $newPresentationDialog.modal('hide');
+        },
+
+        closePresentationPlay : function() {
+//            $presentationPlayer.find("#myCarousel").
         }
     });
 
-    Window.PresentationView = Backbone.View.extend({
+    app.PresentationView = Backbone.View.extend({
         tagName: "li",
         className: "row",
 
-        template :_.template($("#presentationTemplate").html()),
-
         events : {
-            "click .remove" : "removePresentation"
+            "click .remove" : "removePresentation",
+            "click .play" : "playPresentation"
         },
 
         initialize : function() {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model.slides, "add", this.addSlide);
 
-            $("#newSlideDialog").off("submit").on("submit", this.model, this.createNewSlide);
+            $("#newSlideDialog").on("submit", this.model, this.createNewSlide);
         },
 
         render : function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(presentationTemplate(this.model.toJSON()));
             return this;
         },
 
@@ -61,7 +68,7 @@ $(function() {
           event.preventDefault();
         },
         addSlide : function(slide) {
-            var slideView = new Window.SlideView({model:slide});
+            var slideView = new app.SlideView({model:slide});
             this.$(".slides").append(slideView.render().el);
         },
         createNewSlide : function(event) {
@@ -73,14 +80,21 @@ $(function() {
             this.reset();
             $newSlideDialog.modal('hide');
             return false;
+        },
+        playPresentation : function() {
+            $presentationPlayer.find(".modal-header h3").text(this.model.get("name"));
+            this.createCarousel(this.model.get("slides"));
+        },
+
+        createCarousel : function(slides) {
+            $presentationPlayer.find("#myCarousel").html(presentationPlayerTemplate({slides:slides.toJSON()}));
+            $presentationPlayer.find(".item").first().addClass("active");
         }
     });
 
-    Window.SlideView = Backbone.View.extend({
+    app.SlideView = Backbone.View.extend({
         tagName: "li",
         className: "slide",
-
-        template :_.template($("#slideTemplate").html()),
 
         events : {
             "click .remove" : "removeSlide"
@@ -91,7 +105,7 @@ $(function() {
         },
 
         render : function() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(slideTemplate(this.model.toJSON()));
             return this;
         },
         removeSlide : function(event) {
