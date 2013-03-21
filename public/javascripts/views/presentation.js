@@ -12,7 +12,6 @@ $(function() {
 
         events : {
            "submit form#newPresentationDialog" : "createNewPresentation",
-           "click #playPresentationDialog .close" : "closePresentationPlay"
         },
 
         initialize : function() {
@@ -34,10 +33,6 @@ $(function() {
             });
             event.target.reset();
             $newPresentationDialog.modal('hide');
-        },
-
-        closePresentationPlay : function() {
-//            $presentationPlayer.find("#myCarousel").
         }
     });
 
@@ -46,6 +41,7 @@ $(function() {
         className: "row",
 
         events : {
+            "click .add-slide" : "changeListener",
             "click .remove" : "removePresentation",
             "click .play" : "playPresentation"
         },
@@ -54,14 +50,16 @@ $(function() {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model.slides, "add", this.addSlide);
 
-            $("#newSlideDialog").on("submit", this.model, this.createNewSlide);
+
         },
 
         render : function() {
             this.$el.html(presentationTemplate(this.model.toJSON()));
             return this;
         },
-
+        changeListener : function() {
+            $("#newSlideDialog").off("submit").on("submit", this.model, this.createNewSlide);
+        },
         removePresentation : function(event) {
           this.model.destroy();
           this.$el.remove();

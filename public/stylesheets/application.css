@@ -62,6 +62,7 @@ body .sldbox .slide {
   text-align: center;
   box-sizing: border-box;
   padding-top: 10px;
+  vertical-align: middle;
 }
 body .pptbox .slide h3,
 body .sldbox .slide h3 {
@@ -125,4 +126,6 @@ body .container#playPresentationDialog {
 }
 body .carousel-inner > .item {
   text-align: center;
+  padding: 5px 60px;
+  min-height: 100px;
 }
