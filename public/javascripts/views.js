@@ -11,21 +11,14 @@ $(function() {
         el : $("body"),
 
         events : {
-           "submit form#newPresentationDialog" : "createNewPresentation",
+           "submit form#newPresentationDialog" : "createNewPresentation"
         },
 
         initialize : function() {
             this.listenTo(app.presentations, "add", this.addPresentation);
         },
 
-        addPresentation : function(presentation) {
-            var presentationView = new app.PresentationView({model:presentation});
-            this.$("#presentationContainer").append(presentationView.render().el);
-            return false;
-        },
-
         createNewPresentation : function(event){
-            //When use 'create' submits the forms and reloads the page...?
             event.preventDefault();
             app.presentations.add({
                 name: $newPresentationDialog.find("#name").val(),
@@ -33,6 +26,12 @@ $(function() {
             });
             event.target.reset();
             $newPresentationDialog.modal('hide');
+        },
+
+        addPresentation : function(presentation) {
+            var presentationView = new app.PresentationView({model:presentation});
+            this.$("#presentationContainer").append(presentationView.render().el);
+            return false;
         }
     });
 
@@ -49,26 +48,22 @@ $(function() {
         initialize : function() {
             this.listenTo(this.model, 'change', this.render);
             this.listenTo(this.model.slides, "add", this.addSlide);
-
-
         },
 
         render : function() {
             this.$el.html(presentationTemplate(this.model.toJSON()));
             return this;
         },
-        changeListener : function() {
-            $("#newSlideDialog").off("submit").on("submit", this.model, this.createNewSlide);
-        },
-        removePresentation : function(event) {
-          this.model.destroy();
-          this.$el.remove();
-          event.preventDefault();
-        },
+
         addSlide : function(slide) {
             var slideView = new app.SlideView({model:slide});
             this.$(".slides").append(slideView.render().el);
         },
+
+        changeListener : function() {
+            $("#newSlideDialog").off("submit").on("submit", this.model, this.createNewSlide);
+        },
+
         createNewSlide : function(event) {
             event.preventDefault();
             var model = event.data;
@@ -79,6 +74,13 @@ $(function() {
             $newSlideDialog.modal('hide');
             return false;
         },
+
+        removePresentation : function(event) {
+          this.model.destroy();
+          this.$el.remove();
+          event.preventDefault();
+        },
+
         playPresentation : function() {
             $presentationPlayer.find(".modal-header h3").text(this.model.get("name"));
             this.createCarousel(this.model.get("slides"));
@@ -106,14 +108,11 @@ $(function() {
             this.$el.html(slideTemplate(this.model.toJSON()));
             return this;
         },
+
         removeSlide : function(event) {
             event.preventDefault();
             this.model.destroy();
             this.$el.remove();
         }
-
     });
-
-
-
 });
